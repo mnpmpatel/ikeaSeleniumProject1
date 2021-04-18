@@ -109,7 +109,7 @@ public class Ikea3Test {
         js.executeScript("window.scrollBy(0,200)");
 
 //        driver.findElement(By.xpath("//main[@id='content']/div/div/div/div[2]/div[3]/div/div[3]/div/div/button/span/span")).click();
-       
+        Thread.sleep(2000);
      wait = new WebDriverWait(driver, 30);
          ele = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Continue to bag")));
         // Write code here that turns the phrase above into concrete actions

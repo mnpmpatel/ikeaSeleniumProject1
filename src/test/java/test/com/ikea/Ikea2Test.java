@@ -90,7 +90,7 @@ public class Ikea2Test {
         js.executeScript("window.scrollBy(0,1500)");
         driver.findElement(By.className("range-revamp-btn__label")).click();
        // js.executeScript("window.scrollBy(0,1500)");
-
+     Thread.sleep(1000);
         //driver.findElement(By.linkText("Continue to bag")).click();
         WebDriverWait wait = new WebDriverWait(driver, 30);
        
