@@ -82,7 +82,9 @@ public class Ikea3Test {
         ele.click();
         // driver.findElement(By.linkText("Rooms")).click();
         driver.findElement(By.xpath("//img[@alt='Living room']")).click();
+        Thread.sleep(1000);
         driver.findElement(By.xpath("//img[@alt='Armchairs & chaises']")).click();
+        Thread.sleep(1000);
         driver.findElement(By.xpath("//img[@alt='Lounge chairs']")).click();
         driver.findElement(By.xpath("//button[3]/span")).click();
         driver.findElement(By.id("gray")).click();
