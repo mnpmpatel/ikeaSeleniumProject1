@@ -15,7 +15,11 @@ import static org.junit.Assert.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  *
@@ -40,12 +44,23 @@ public class Ikea3Test {
     @Before
     public void setUp() {
         System.setProperty("webdriver.chrome.driver", "c:\\data\\chromedriver.exe");
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--window-size=1920,1080");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--disable-extensions");
+        options.setExperimentalOption("useAutomationExtension", false);
+        options.addArguments("--proxy-server='direct://'");
+        options.addArguments("--proxy-bypass-list=*");
+        options.addArguments("--start-maximized");
+        options.addArguments("--headless");
+
+        driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
 
     @After
     public void tearDown() {
+        // driver.close();
     }
 
     // TODO add test methods here.
@@ -59,9 +74,13 @@ public class Ikea3Test {
         driver.get("https://www.ikea.com/us/en/");
         driver.manage().window().maximize();
         driver.findElement(By.xpath("/html/body/div[10]/div/div[2]/button/span")).click();
-        
-        Thread.sleep(2000);
-        driver.findElement(By.linkText("Rooms")).click();
+
+        // Thread.sleep(2000);
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        WebElement ele = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Rooms")));
+        // Write code here that turns the phrase above into concrete actions
+        ele.click();
+        // driver.findElement(By.linkText("Rooms")).click();
         driver.findElement(By.xpath("//img[@alt='Living room']")).click();
         driver.findElement(By.xpath("//img[@alt='Armchairs & chaises']")).click();
         driver.findElement(By.xpath("//img[@alt='Lounge chairs']")).click();
@@ -88,7 +107,14 @@ public class Ikea3Test {
         js.executeScript("window.scrollBy(0,200)");
 
 //        driver.findElement(By.xpath("//main[@id='content']/div/div/div/div[2]/div[3]/div/div[3]/div/div/button/span/span")).click();
-        driver.findElement(By.linkText("Continue to bag")).click();
+       
+     wait = new WebDriverWait(driver, 30);
+         ele = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Continue to bag")));
+        // Write code here that turns the phrase above into concrete actions
+        ele.click();
+        
+//driver.findElement(By.linkText("Continue to bag")).click();
+
         js.executeScript("window.scrollBy(0,200)");
 
         driver.findElement(By.cssSelector("div.shoppingbag__sidebar > div.checkout__wrapper > button.cart-ingka-jumbo-btn.cart-ingka-jumbo-btn--emphasised.checkoutButton__default > span.cart-ingka-jumbo-btn__inner > span.cart-ingka-jumbo-btn__icon > svg.cart-ingka-svg-icon")).click();

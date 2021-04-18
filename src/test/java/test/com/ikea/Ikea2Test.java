@@ -15,7 +15,11 @@ import static org.junit.Assert.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  *
@@ -40,12 +44,24 @@ public class Ikea2Test {
     @Before
     public void setUp() {
         System.setProperty("webdriver.chrome.driver", "c:\\data\\chromedriver.exe");
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+
+        options.addArguments("--window-size=1920,1080");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--disable-extensions");
+        options.setExperimentalOption("useAutomationExtension", false);
+        options.addArguments("--proxy-server='direct://'");
+        options.addArguments("--proxy-bypass-list=*");
+        options.addArguments("--start-maximized");
+        options.addArguments("--headless");
+
+        driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
 
     @After
     public void tearDown() {
+        driver.close();
     }
 
     // TODO add test methods here.
@@ -68,13 +84,19 @@ public class Ikea2Test {
 
         // This  will scroll down the page by  1500 pixel vertical		
         js.executeScript("window.scrollBy(0,1500)");
-//        Thread.sleep(2000);
+         Thread.sleep(2000);
 
         driver.findElement(By.xpath("//img[@alt='RYET LED bulb E26 470 lumen, globe clear']")).click();
         js.executeScript("window.scrollBy(0,1500)");
         driver.findElement(By.className("range-revamp-btn__label")).click();
-        js.executeScript("window.scrollBy(0,1500)");
-        driver.findElement(By.linkText("Continue to bag")).click();
+       // js.executeScript("window.scrollBy(0,1500)");
+
+        //driver.findElement(By.linkText("Continue to bag")).click();
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+       
+        WebElement ele = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Continue to bag")));
+        // Write code here that turns the phrase above into concrete actions
+        ele.click();
 
         // This  will scroll down the page by  200 pixel vertical		
         js.executeScript("window.scrollBy(0,200)");
